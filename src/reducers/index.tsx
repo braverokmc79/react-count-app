@@ -7,4 +7,8 @@ const rootReducers = combineReducers({
     todos
 })
 
-export default rootReducers
+export default rootReducers;
+
+export type RootState = ReturnType<typeof rootReducers>;
+
+

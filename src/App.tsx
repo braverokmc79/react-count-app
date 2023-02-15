@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { useSelector } from 'react-redux/es/exports';
+import { RootState } from './reducers';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 
 type Props={
   onIncrement: ()=>void;
@@ -8,6 +11,10 @@ type Props={
 }
 
 function App({ onIncrement, onDecrement } :Props) {
+  const dispatch =useDispatch();
+  const counter =useSelector((state : RootState)=>state.counter);
+  const todos : string[] =useSelector((state : RootState)=>state.todos);
+
   const [todoValue, setTodoValue] =useState("");
 
   const handleChange=(e : React.ChangeEvent<HTMLInputElement>)=>{
@@ -16,12 +23,16 @@ function App({ onIncrement, onDecrement } :Props) {
 
   const addTodo =(e: React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
+    dispatch({
+      type:"ADD_TODO",
+      text:todoValue
+    });
     setTodoValue("");
   }
 
   return (
     <div className="App">
-        {/* Clicked : {value} times */}
+         Clicked : {counter} times 
 
         <button onClick={onIncrement}>
           +
@@ -30,7 +41,9 @@ function App({ onIncrement, onDecrement } :Props) {
         <button onClick={onDecrement}>
           -
         </button>
-
+       <ul>
+          {todos.map((todo, index)=><li key={index}>{todo}</li>)}
+       </ul>
       <form onSubmit={addTodo}>
           <input type='text' value={todoValue} onChange={handleChange} />
           <input type="submit" />
