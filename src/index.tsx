@@ -4,18 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {legacy_createStore as createStore } from 'redux';
-import counter from './reducers';
+import rootReducers from './reducers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const store =createStore(counter);
+const store =createStore(rootReducers);
 
+store.dispatch({
+  type:"ADD_TODO",
+  text:"USE REDUX"
+})
+console.log('store.getState' ,  store.getState());
 
 const render = ()=>root.render(
   <React.StrictMode>
-    <App  value={store.getState()} 
+    <App  
+    
+    value={store.getState()} 
         onIncrement={()=> store.dispatch({type:"INCREMENT"})}
         onDecrement={()=> store.dispatch({type:"DECREMENT"})}
     />

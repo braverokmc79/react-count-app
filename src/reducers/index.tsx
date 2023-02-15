@@ -1,15 +1,10 @@
-const cunter =(state =0 , action:{type:string} )=>{
-  
-    switch(action.type){
-        case "INCREMENT":
-            return state+1;
-        case "DECREMENT":
-            return state-1;
-        default:
-            return state;
-           
-    }
-};
+import {combineReducers} from 'redux';
+import counter from './counter';
+import todos from './todos';
 
+const rootReducers = combineReducers({
+    counter,
+    todos
+})
 
-export default cunter;
+export default rootReducers
